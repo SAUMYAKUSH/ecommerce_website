@@ -42,4 +42,25 @@ export const productsArr = [
     
     ]
 
+    import React from 'react'
+import Cart from '../Components/Cart/Cart'
+    
+    function ProductList({showCartHandler,cartShown, hideCartHandler}) {
+        const list = productsArr.map((item)=>(
+            <li key={item.id}>{item.title}{item.price} <img src={item.imageUrl}/></li>
+        ))
+      return (
+        <div>
+          <ul>
+            <button onClick={showCartHandler}>Cart</button>
+            {list}
+            {cartShown && <Cart list={list} hideCartHandler={hideCartHandler}/>}
+          </ul>
+        </div>
+      )
+    }
+    
+    export default ProductList
+    
+
     
