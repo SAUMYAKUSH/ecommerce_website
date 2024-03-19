@@ -41,20 +41,36 @@ export const productsArr = [
     }
     
     ]
+ import React, { useContext } from 'react'
 
-    import React from 'react'
-import Cart from '../Components/Cart/Cart'
+ import CartContext from '../Components/Cart/store/Cart-Context'
+ import { Button, Card, Col, Container, Row } from 'react-bootstrap'
     
-    function ProductList({showCartHandler,cartShown, hideCartHandler}) {
-        const list = productsArr.map((item)=>(
-            <li key={item.id}>{item.title}{item.price} <img src={item.imageUrl}/></li>
-        ))
+       const ProductList=()=>{
+        const cartCxt = useContext(CartContext);
+        const addToCartHandler =(data)=>{
+            cartCxt.addItem(data);
+        }
+       
       return (
         <div>
           <ul>
-            <button onClick={showCartHandler}>Cart</button>
-            {list}
-            {cartShown && <Cart list={list} hideCartHandler={hideCartHandler}/>}
+            <Container>
+                <Row>
+                    {productsArr.map((item,index)=>(
+                        <Col key={index} md={6} className='mb-5'>
+                            <Card style={{width:"18rem"}}>
+                            <Card.Title>{item.title}</Card.Title>
+                            <Card.Img variant='top' src={item.imageUrl}/>
+                            <Card.Body>
+                                <Card.Text>{item.price}</Card.Text>
+                                <Button onClick={()=>addToCartHandler(item)} variant='primary'>Add to Cart</Button>
+                            </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            </Container>
           </ul>
         </div>
       )

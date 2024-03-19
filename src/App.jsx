@@ -1,6 +1,9 @@
 
 import React, {useState} from 'react'
 import ProductList from './assets/ProductList'
+import NavBar from './Components/Navbar/Navbar';
+import CartProvider from './Components/Cart/store/CartProvider';
+import Cart from './Components/Cart/Cart';
 
 function App() {
   const [cartShown, setCartShown] = useState(false);
@@ -13,8 +16,12 @@ function App() {
   }
   return (
     <div>
-        <ProductList showCartHandler={showCartHandler} cartShown={cartShown} hideCartHandler={hideCartHandler}/>
+      <CartProvider>
+      <NavBar showCartHandler={showCartHandler}></NavBar>
 
+        <ProductList showCartHandler={showCartHandler} cartShown={cartShown} hideCartHandler={hideCartHandler}/>
+        {cartShown && <Cart hideCartHandler={hideCartHandler}></Cart>}
+      </CartProvider>
     </div>
   )
 }
